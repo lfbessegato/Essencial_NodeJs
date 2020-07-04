@@ -1,5 +1,5 @@
 {
-  "name": "cap11-express-carros",
+  "name": "cap13-express-carros",
   "version": "1.0.0",
   "description": "Construindo uma API Rest com Express",
   "main": "app.js",
