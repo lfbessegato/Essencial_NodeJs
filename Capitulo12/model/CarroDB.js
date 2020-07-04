@@ -19,19 +19,15 @@ class CarroDB {
 	static getCarros(callback) {
 		let connection = CarroDB.connect()
 		// Cria uma consulta
-		let sql = "select * from carroX";
+		let sql = "select * from carro";
 		let query = connection.query(sql, function (error, results, fields) {
-			//if (error) throw error; -> Não trata erro de excecao do MySQL
 			if (error) {
-				// Retorna os dados pela função de callback
-				// callback(results) -> não sendo tratado o erro
-				callback(error, null); // Erro
-				return;
-			}
+                callback(error,null);
+                return;
+            }
 			// Retorna os dados pela função de callback
-			callback(null, results); // OK
+            callback(null,results);
 		});
-		console.log(query.sql)
 		// Fecha a conexão.
 		connection.end();
 	}
@@ -115,9 +111,25 @@ class CarroDB {
 		let sql = "delete from carro where id = ?";
 		// Id do carro para deletar
 		let id = carro.id;
-		let query = connection.query(sql, [id], function (error, results, fields) {
+		let query = connection.query(sql, id, function (error, results, fields) {
 			if (error) throw error;
 			callback(carro)
+		});
+		console.log(query.sql)
+		// Fecha a conexão.
+		connection.end();
+	}
+	// Deleta um carro pelo id.
+	static deleteById(id, callback) {
+
+		let connection = CarroDB.connect()
+
+		// SQL para deletar o carro
+		let sql = "delete from carro where id = ?";
+
+		let query = connection.query(sql, [id], function (error, results, fields) {
+			if (error) throw error;
+			callback(results.affectedRows)
 		});
 		console.log(query.sql)
 		// Fecha a conexão.
